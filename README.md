@@ -1,2 +1,2 @@
 # Love GPU ❤️
-![](recording.gif)
+![](./Recordings/gif_animation_001.gif)
