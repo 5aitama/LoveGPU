@@ -4,33 +4,47 @@ using UnityEngine;
 
 public class World : MonoBehaviour
 {
-    static readonly int positionsID = Shader.PropertyToID("_Positions");
-    static readonly int resolutionID = Shader.PropertyToID("_Resolution");
-    static readonly int stepID = Shader.PropertyToID("_Step");
-    static readonly int timeID = Shader.PropertyToID("_Time");
+    // Shader properties ID
+    private static readonly int positionsID = Shader.PropertyToID("_Positions"),
+                                resolutionID = Shader.PropertyToID("_Resolution"),
+                                stepID = Shader.PropertyToID("_Step"),
+                                timeID = Shader.PropertyToID("_Time");
 
-    public const int CHUNK_SIZE = 64;
-    public const int CHUNK_BLOCK_AMOUNT = CHUNK_SIZE * CHUNK_SIZE;
+    // The maximum amount of cubes per axis (x and y)
+    private const int MAX_RESOLUTION = 1000;
+    // The maximum amount of instances.
+    private const int MAX_INSTANCES = MAX_RESOLUTION * MAX_RESOLUTION;
 
-    [Range(1, maxResolution)]
+    // The current amount of cubes.
+    // This is variable ! 😉
+    [Range(1, MAX_RESOLUTION)]
     public int resolution = 100;
-    public const int maxResolution = 1000;
-
+    
+    // The shader that processing
+    // cubes data.
     [SerializeField]
     private ComputeShader computeShader = default;
 
+    // The material of each cube.
+    // (is the same for all)
     [SerializeField]
     private Material material = default;
 
+    // The mesh that must be instanced.
+    // (default is the cube mesh)
     [SerializeField]
     private Mesh mesh = default;
 
+    // Buffer that contains all cube position.
     private ComputeBuffer positionsBuffer;
+
+    // Buffer that contains the amount of threads
+    // group.
     private ComputeBuffer argsBuffer;
 
     private void OnEnable() 
     {
-        positionsBuffer = new ComputeBuffer(maxResolution * maxResolution, 3 * 4);
+        positionsBuffer = new ComputeBuffer(MAX_INSTANCES, 3 * sizeof(float));
         argsBuffer = new ComputeBuffer(3, sizeof(int));
 
         computeShader.SetBuffer(0, positionsID, positionsBuffer);
