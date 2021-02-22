@@ -8,7 +8,7 @@ First of all this project demonstrate how to draw a big amount of same object (h
 
 ### How do that 5aitama.. How ???
 
-Simple my friend you just need to ask the GPU : Hey girl show me ~~your boobs~~ 1.000.000 cubes and apply some things on each of them 😈.
+Simple my friend you just need to ask the GPU : Hey baby show me ~~your boobs~~ 1.000.000 cubes and apply some things on each of them 😈.
 
 ## Explanation
 
